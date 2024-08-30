@@ -11,7 +11,7 @@ public interface ProductDao {
 
 	Optional<Product> getProduct(long id);
 
-	List<Product> findProducts(String name);
+	List<Product> findProducts(String name, String category);
 
 	List<Product> findProductsByCategory(String category);
 
@@ -26,4 +26,6 @@ public interface ProductDao {
 	void deleteProduct(Long sellerId, long productId);
 
 	List<ProductManagementDTO> getAllProductsForAdmin();
+
+	List<String> getCategories();
 }

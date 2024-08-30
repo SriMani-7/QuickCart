@@ -12,7 +12,7 @@ import com.srimani.quickcart.entity.Review;
 
 public interface BuyerService {
 
-	List<Product> getProducts(String reqParameter);
+	List<Product> getProducts(String reqParameter, String category);
 
 	Optional<Product> getProduct(long pId);
 
@@ -34,5 +34,7 @@ public interface BuyerService {
 	Order getOrderDetails(long userId, long orderId);
 
 	List<OrderedProduct> getOrderedProducts(long userId, long orderId);
+
+	List<String> getProductCategories();
 
 }

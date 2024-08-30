@@ -1,7 +1,6 @@
 package com.srimani.quickcart.controller.buyer;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.srimani.quickcart.entity.Product;
 import com.srimani.quickcart.service.BuyerService;
 import com.srimani.quickcart.util.ServiceFactory;
 
@@ -28,17 +26,14 @@ public class ProductServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		var path = request.getPathInfo();
-		System.out.println("Received request for path: " + path);
-
-		if (path == null || path.equals("/")) {
-			String searchQuery = request.getParameter("search");
-			List<Product> products = service.getProducts(searchQuery);
-			request.setAttribute("products", products);
-			System.out.println("Forwarding to products.jsp");
-			request.getRequestDispatcher("products.jsp").forward(request, response);
-		}
-
+		String searchQuery = request.getParameter("search");
+		var category = request.getParameter("category");
+		var products = service.getProducts(searchQuery, category);
+		var categories = service.getProductCategories();
+		request.setAttribute("products", products);
+		request.setAttribute("categories", categories);
+		System.out.println("Forwarding to products.jsp");
+		request.getRequestDispatcher("products.jsp").forward(request, response);
 	}
 
 }

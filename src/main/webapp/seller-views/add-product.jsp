@@ -14,6 +14,11 @@
             <label for="productName" class="form-label">Product Name</label>
             <input type="text" class="form-control" id="productName" name="name" required>
         </div>
+        
+        <div class="mb-3">
+            <label for="productImage" class="form-label">Product image url</label>
+            <input type="text" class="form-control" id="productImage" name="imageUrl" required>
+        </div>
 
         <div class="mb-3">
             <label for="productDescription" class="form-label">Description</label>

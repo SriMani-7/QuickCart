@@ -31,8 +31,8 @@ public class BuyerServiceImpl implements BuyerService {
 	}
 
 	@Override
-	public List<Product> getProducts(String reqParameter) {
-		return productDao.findProducts(reqParameter);
+	public List<Product> getProducts(String reqParameter, String category) {
+		return productDao.findProducts(reqParameter, category);
 	}
 
 	@Override
@@ -85,5 +85,10 @@ public class BuyerServiceImpl implements BuyerService {
 	@Override
 	public List<OrderedProduct> getOrderedProducts(long userId, long orderId) {
 		return orderDAO.getOrderedProducts(userId, orderId);
+	}
+
+	@Override
+	public List<String> getProductCategories() {
+		return productDao.getCategories();
 	}
 }

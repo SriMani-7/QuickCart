@@ -19,11 +19,12 @@
         <thead>
             <tr>
                 <th scope="col">Product ID</th>
+                <th scope="col">Image</th> <!-- New Image Column -->
                 <th scope="col">Product Name</th>
                 <th scope="col">Description</th>
                 <th scope="col">Category</th>
                 <th scope="col">Price</th>
-                <th scope="col">Quantity</th>
+               
                 <th scope="col">Actions</th>
             </tr>
         </thead>
@@ -31,18 +32,22 @@
             <c:forEach var="product" items="${inventory}">
                 <tr>
                     <td>${product.id}</td>
+                    <td>
+                        <!-- Display Product Image -->
+                        <img src="${product.imageUrl}" alt="${product.name}" class="img-fluid" style="max-width: 100px; max-height: 100px;">
+                    </td>
                     <td>${product.name}</td>
                     <td>${product.description}</td>
                     <td>${product.category}</td>
                     <td>$${product.price}</td>
-                    <td></td>
+                    
                     <td>
                         <a href="${pageContext.request.contextPath}/seller/inventory/edit?id=${product.id}" class="btn btn-warning btn-sm">Edit</a>
-                        <form method="post" action="${pageContext.request.contextPath}/seller/inventory">
-    <input type="hidden" name="_method" value="DELETE">
-    <input type="hidden" name="id" value="${product.id}">
-    <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-</form>
+                        <form method="post" action="${pageContext.request.contextPath}/seller/inventory" style="display:inline;">
+                            <input type="hidden" name="_method" value="DELETE">
+                            <input type="hidden" name="id" value="${product.id}">
+                            <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                        </form>
                     </td>
                 </tr>
             </c:forEach>

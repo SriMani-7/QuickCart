@@ -7,6 +7,15 @@ public class Product {
 	private String category;
 	private double price;
 	private long sellerId;
+	private String imageUrl;
+
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
+	}
 
 	public long getId() {
 		return id;

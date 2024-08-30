@@ -7,6 +7,7 @@ public class ProductManagementDTO {
 	private double price;
 	private String sellerUsername;
 	private int totalOrders;
+	private String imageUrl;
 
 	public long getId() {
 		return id;
@@ -54,6 +55,14 @@ public class ProductManagementDTO {
 
 	public void setTotalOrders(int totalOrders) {
 		this.totalOrders = totalOrders;
+	}
+
+	public void setImageUrl(String string) {
+		this.imageUrl = string;
+	}
+
+	public String getImageUrl() {
+		return imageUrl;
 	}
 
 }

@@ -21,41 +21,41 @@ public class DatabaseCartDAO implements ShappingCartDAO {
 
 	@Override
 	public int addProduct(long userId, long productId) {
-		try (var con = dataSource.getConnection()) {
-			var st = con.prepareStatement("insert into cart_items (buyer_id,product_id, quantity) values(?,?,1)");
-			st.setLong(1, userId);
-			st.setLong(2, productId);
-			return st.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return 0;
+		return dataSource.withQuery("insert into cart_items (buyer_id,product_id, quantity) values(?,?,1)", st -> {
+			try {
+				st.setLong(1, userId);
+				st.setLong(2, productId);
+				return st.executeUpdate();
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return 0;
+			}
+		});
 	}
 
 	@Override
 	public LinkedList<CartItem> getCartItemsForUserId(long userId) {
-		try (var con = dataSource.getConnection()) {
-			var query = "select p.name, p.price, p.description, ci.quantity, p.id  from products p inner join cart_items ci on ci.product_id = p.id where ci.buyer_id = ?";
-			var st = con.prepareStatement(query);
-			st.setLong(1, userId);
-			var set = st.executeQuery();
-			var items = new LinkedList<CartItem>();
-			while (set.next()) {
-				var c = new CartItem();
-				c.setProductId(set.getLong(5));
-				c.setProductName(set.getString(1));
-				c.setPrice(set.getDouble(2));
-				c.setDescription(set.getString(3));
-				c.setQuantity(set.getInt(4));
-
-				items.add(c);
+		var query = "select p.name, p.price, p.description, ci.quantity, p.id  from products p inner join cart_items ci on ci.product_id = p.id where ci.buyer_id = ?";
+		return dataSource.withQuery(query, st -> {
+			try {
+				st.setLong(1, userId);
+				var set = st.executeQuery();
+				var items = new LinkedList<CartItem>();
+				while (set.next()) {
+					var c = new CartItem();
+					c.setProductId(set.getLong(5));
+					c.setProductName(set.getString(1));
+					c.setPrice(set.getDouble(2));
+					c.setDescription(set.getString(3));
+					c.setQuantity(set.getInt(4));
+					items.add(c);
+				}
+				return items;
+			} catch (SQLException e) {
+				e.printStackTrace();
+				return new LinkedList<CartItem>();
 			}
-			return items;
-		} catch (SQLException e) {
-			// TODO: handle exception
-			e.printStackTrace();
-		}
-		return new LinkedList<CartItem>();
+		});
 	}
 
 	@Override

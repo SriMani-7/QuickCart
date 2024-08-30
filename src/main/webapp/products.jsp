@@ -2,24 +2,50 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!-- Navbar -->
+<html>
+
+<head>
+<style>
+.prodcut-desc {
+height: 5em;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+</style>
+</head>
+
+<body>
+
 <jsp:include page="header.jsp">
 	<jsp:param name="pageTitle" value="Product Details" />
 </jsp:include>
 <!-- Main Content -->
 <div class="container mt-5">
 	<h1 class="mb-4">Product List</h1>
+	
+	<!-- Category Dropdown -->
+	<div class="mb-4">
+		<form action="${pageContext.request.contextPath}/products" method="get">
+			<div class="input-group">
+				<select class="form-select" name="category" onchange="this.form.submit()">
+					<option value="">Select Category</option>
+					<c:forEach var="category" items="${categories}">
+						<option value="${category}" <c:if test="${category == param.category}">selected</c:if>>${category}</option>
+					</c:forEach>
+				</select>
+			</div>
+		</form>
+	</div>
 
-	<div class="row row-cols-1 row-cols-md-3 g-4">
+	<div class="row row-cols-1 row-cols-md-4 g-4">
 		<c:forEach var="product" items="${products}">
 			<div class="col">
-				<div class="card h-100">
-					<%-- <img src="${product.imageUrl}" class="card-img-top" alt="${product.name}" --%>
+				<div class="card">
+					<img src="${product.imageUrl}" class="card-img-top" alt="${product.name}">
 					<div class="card-body">
 						<h5 class="card-title">${product.name}</h5>
-						<p class="card-text">${product.description}</p>
-						<p class="card-text">
-							<strong>Category:</strong> ${product.category}
-						</p>
+						<p class="card-text   text-truncate">${product.description}</p>
 						<p class="card-text">
 							<strong>Price:</strong> $${product.price}
 						</p>

@@ -48,6 +48,7 @@ public class ProductEditServlet extends HttpServlet {
 		var category = request.getParameter("category");
 		var price = request.getParameter("price");
 		var pid = request.getParameter("id");
+		var imageUrl = request.getParameter("imageUrl");
 
 		var p = new Product();
 		p.setId(Long.parseLong(pid));
@@ -55,6 +56,7 @@ public class ProductEditServlet extends HttpServlet {
 		p.setDescription(description);
 		p.setCategory(category);
 		p.setPrice(Double.parseDouble(price));
+		p.setImageUrl(imageUrl);
 
 		if (sellerService.updateProduct(id, p)) {
 			response.sendRedirect(request.getContextPath() + "/seller/inventory");

@@ -49,6 +49,7 @@ public class NewProductServlet extends HttpServlet {
 		p.setDescription(description);
 		p.setCategory(category);
 		p.setPrice(Double.parseDouble(price));
+		p.setImageUrl(request.getAttribute("imageUrl").toString());
 
 		if (sellerService.addProduct(id, p)) {
 			response.sendRedirect(request.getContextPath() + "/seller/inventory");

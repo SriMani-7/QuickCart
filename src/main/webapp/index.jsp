@@ -18,7 +18,7 @@
             <h1 class="display-3 text-white mb-4">Welcome to Our QuickCart Store</h1>
             <p class="lead text-white mb-4">Browse our wide range of products and enjoy great deals!</p>
             <a href="${pageContext.request.contextPath}/products" class="btn glassy-btn">Browse Products</a>
-            <a href="${pageContext.request.contextPath}/admin/login" class="btn glassy-btn mt-3">Admin Login</a>
+            <a href="${pageContext.request.contextPath}/login" class="btn glassy-btn mt-3">Login</a>
         </div>
 
         <!-- Benefits Cards -->
