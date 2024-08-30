@@ -13,27 +13,53 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
-            <a class="navbar-brand" href="${pageContext.request.contextPath}/products">Product List</a>
+            <a class="navbar-brand" href="${pageContext.request.contextPath}/products">QuickCart</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav me-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" href="${pageContext.request.contextPath}/products">Home</a>
+                        <a class="nav-link active" href="${pageContext.request.contextPath}/products">All Products</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/about">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/contact">Contact</a>
-                    </li>
+                    <!-- Show additional options if the user is a buyer -->
+                    <c:if test="${sessionScope['user-role'] == 'BUYER'}">
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/orders">My Orders</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/reviews">My Reviews</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="${pageContext.request.contextPath}/cart">My Cart</a>
+                        </li>
+                    </c:if>
                 </ul>
+                <!-- Search box -->
                 <form class="d-flex" method="get" action="${pageContext.request.contextPath}/products">
                     <input class="form-control me-2" type="search" name="search" placeholder="Search products" aria-label="Search" value="${param.search}">
                     <button class="btn btn-outline-success" type="submit">Search</button>
                 </form>
-                <a href="${pageContext.request.contextPath}/login" class="btn btn-outline-primary ms-3">Login</a>
+                <!-- User greeting and login/logout button -->
+                <ul class="navbar-nav ms-auto">
+                    <c:choose>
+                        <c:when test="${sessionScope['user-role'] == 'BUYER'}">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Hi, ${sessionScope.username}</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="btn btn-outline-danger ms-3" href="${pageContext.request.contextPath}/logout">Logout</a>
+                            </li>
+                        </c:when>
+                        <c:otherwise>
+                            <li class="nav-item">
+                                <a class="nav-link" href="${pageContext.request.contextPath}/login">Login</a>
+                            </li>
+                        </c:otherwise>
+                    </c:choose>
+                </ul>
             </div>
         </div>
     </nav>
+</body>
+</html>

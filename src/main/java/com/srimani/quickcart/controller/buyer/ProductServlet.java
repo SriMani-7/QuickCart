@@ -1,4 +1,4 @@
-package com.srimani.quickcart.controller;
+package com.srimani.quickcart.controller.buyer;
 
 import java.io.IOException;
 import java.util.List;
@@ -11,24 +11,18 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.srimani.quickcart.entity.Product;
 import com.srimani.quickcart.service.BuyerService;
-import com.srimani.quickcart.service.BuyerServiceImpl;
-import com.srimani.quickcart.util.DAOFactory;
+import com.srimani.quickcart.util.ServiceFactory;
 
 @WebServlet("/products")
 public class ProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private BuyerService service;
 
-	public ProductServlet() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-		service = new BuyerServiceImpl(DAOFactory.getInstance());
+		service = ServiceFactory.getBuyerService();
 	}
 
 	@Override

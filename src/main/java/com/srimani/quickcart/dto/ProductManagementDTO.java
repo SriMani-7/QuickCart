@@ -1,12 +1,12 @@
-package com.srimani.quickcart.entity;
+package com.srimani.quickcart.dto;
 
-public class Product {
+public class ProductManagementDTO {
 	private long id;
 	private String name;
-	private String description;
 	private String category;
 	private double price;
-	private long sellerId;
+	private String sellerUsername;
+	private int totalOrders;
 
 	public long getId() {
 		return id;
@@ -22,14 +22,6 @@ public class Product {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public String getCategory() {
@@ -48,11 +40,20 @@ public class Product {
 		this.price = price;
 	}
 
-	public long getSellerId() {
-		return sellerId;
+	public String getSellerUsername() {
+		return sellerUsername;
 	}
 
-	public void setSellerId(long sellerId) {
-		this.sellerId = sellerId;
+	public void setSellerUsername(String sellerUsername) {
+		this.sellerUsername = sellerUsername;
 	}
+
+	public int getTotalOrders() {
+		return totalOrders;
+	}
+
+	public void setTotalOrders(int totalOrders) {
+		this.totalOrders = totalOrders;
+	}
+
 }
