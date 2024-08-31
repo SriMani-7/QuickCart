@@ -57,4 +57,35 @@ public class DatabaseReviewDAO implements ReviewDAO {
 		return List.of();
 	}
 
+	@Override
+	public List<Review> getBuyerProductReviews(Long uid) {
+		var query = "select r.message, r.rating, p.name, r.product_id, r.user_id from reviews r inner join products p on p.id = r.product_id where r.user_id = ?";
+		return source.withQuery(query, st -> {
+			List<Review> reviews = new LinkedList<Review>();
+			st.setLong(1, uid);
+			var set = st.executeQuery();
+			while (set.next()) {
+				var re = new Review();
+				re.setUserId(set.getLong("user_id"));
+				re.setMessage(set.getString("message"));
+				re.setRating(set.getInt("rating"));
+				re.setProductId(set.getLong("product_id"));
+				re.setProductName(set.getString("name"));
+
+				reviews.add(re);
+			}
+			return reviews;
+		});
+	}
+
+	@Override
+	public void deleteReview(long pid, long userId) {
+		source.withQuery("delete from reviews where product_id = ? and user_id = ?", st -> {
+			st.setLong(1, pid);
+			st.setLong(2, userId);
+			st.executeUpdate();
+			return null;
+		});
+	}
+
 }

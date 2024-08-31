@@ -11,4 +11,8 @@ public interface ReviewDAO {
 
 	List<ProductReview> getProductReviews(long id);
 
+	List<Review> getBuyerProductReviews(Long uid);
+
+	void deleteReview(long pid, long userId);
+
 }

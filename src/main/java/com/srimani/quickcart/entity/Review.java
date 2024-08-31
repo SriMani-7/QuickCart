@@ -7,6 +7,15 @@ public class Review {
 	private long userId;
 	private String message;
 	private double rating;
+	private String productName;
+
+	public String getProductName() {
+		return productName;
+	}
+
+	public void setProductName(String productName) {
+		this.productName = productName;
+	}
 
 	public long getId() {
 		return id;

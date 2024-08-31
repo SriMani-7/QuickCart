@@ -107,4 +107,14 @@ public class BuyerServiceImpl implements BuyerService {
 	public void updateCartProductQuantity(Long uid, long pid, int quantity) {
 		shappingCartDAO.updateProductQuantity(uid, pid, quantity);
 	}
+
+	@Override
+	public List<Review> getBuyerProductReviews(Long uid) {
+		return reviewDAO.getBuyerProductReviews(uid);
+	}
+
+	@Override
+	public void deleteReview(long rId, long userId) {
+		reviewDAO.deleteReview(rId, userId);
+	}
 }

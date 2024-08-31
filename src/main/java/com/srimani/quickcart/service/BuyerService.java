@@ -44,4 +44,8 @@ public interface BuyerService {
 
 	void updateCartProductQuantity(Long uid, long pid, int quantity);
 
+	List<Review> getBuyerProductReviews(Long uid);
+
+	void deleteReview(long rId, long userId);
+
 }
