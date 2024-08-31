@@ -93,9 +93,11 @@ public class DatabaseOrderDAO implements OrderDAO {
 	public List<OrderedProduct> getOrderedProducts(long userId, long orderId) {
 		List<OrderedProduct> orderedProducts = new ArrayList<>();
 
-		String sql = "SELECT p.id as product_id, p.name as product_name, op.quantity, op.price "
-				+ "FROM order_items op " + "JOIN products p ON op.product_id = p.id "
-				+ "JOIN orders o ON op.order_id = o.order_id " + "WHERE o.user_id = ? AND o.order_id = ?";
+		String sql = """
+				SELECT p.id as product_id, p.name as product_name, op.quantity, op.price, op.status
+				FROM order_items op JOIN products p ON op.product_id = p.id
+				JOIN orders o ON op.order_id = o.order_id WHERE o.user_id = ? AND o.order_id = ?
+				""";
 
 		try (Connection con = dataSource.getConnection(); PreparedStatement ps = con.prepareStatement(sql)) {
 
@@ -110,6 +112,7 @@ public class DatabaseOrderDAO implements OrderDAO {
 					orderedProduct.setName(rs.getString("product_name"));
 					orderedProduct.setQuantity(rs.getInt("quantity"));
 					orderedProduct.setPrice(rs.getDouble("price"));
+					orderedProduct.setStatus(rs.getString("status"));
 
 					orderedProducts.add(orderedProduct);
 				}

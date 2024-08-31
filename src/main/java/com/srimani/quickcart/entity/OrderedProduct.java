@@ -7,6 +7,15 @@ public class OrderedProduct {
 	private String name;
 	private int quantity;
 	private double price;
+	private String status;
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 	public long getOrderId() {
 		return orderId;

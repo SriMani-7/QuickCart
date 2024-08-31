@@ -51,7 +51,7 @@
 
 		<!-- Total Price -->
 		<div class="text-end mt-4">
-			<h4>Total Payable Amount: $${totalPrice}</h4>
+			<h4>Total Payable Amount: &#8377;${totalPrice}</h4>
 			<button type="submit" class="btn btn-success">Place Order</button>
 		</div>
 	</form>

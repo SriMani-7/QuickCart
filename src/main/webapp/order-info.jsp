@@ -17,7 +17,7 @@
                     <div class="card mb-4">
                         <div class="card-body">
                             <h2 class="card-title">Order ID: ${order.orderId}</h2>
-                            <p class="card-text"><strong>Total Price:</strong> $${order.totalPrice}</p>
+                            <p class="card-text"><strong>Total Price:</strong> &#8377;${order.totalPrice}</p>
                             <p class="card-text"><strong>Order Date:</strong> ${order.orderDate}</p>
                             <p class="card-text"><strong>Payment Method:</strong> ${order.paymentMethod}</p>
                             <p class="card-text"><strong>Shipping Address:</strong> ${order.shippingAddress}</p>
@@ -39,6 +39,7 @@
                                 <th>Quantity</th>
                                 <th>Price</th>
                                 <th>Total</th>
+                                <th>Status</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -46,8 +47,9 @@
                                 <tr>
                                     <td><c:out value="${product.name}" /></td>
                                     <td><c:out value="${product.quantity}" /></td>
-                                    <td>$<c:out value="${product.price}" /></td>
-                                    <td>$<c:out value="${product.quantity * product.price}" /></td>
+                                    <td>&#8377;<c:out value="${product.price}" /></td>
+                                    <td>&#8377;<c:out value="${product.quantity * product.price}" /></td>
+                                    <td><c:out value="${product.status}"/></td>
                                 </tr>
                             </c:forEach>
                         </tbody>

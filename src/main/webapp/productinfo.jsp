@@ -36,7 +36,7 @@
 								<strong>Category:</strong> ${product.category}
 							</p>
 							<p class="card-text">
-								<strong>Price:</strong> $${product.price}
+								<strong>Price:</strong> &#8377;${product.price}
 							</p>
 
 							<c:choose>
