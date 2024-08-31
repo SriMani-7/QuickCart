@@ -1,6 +1,7 @@
 package com.srimani.quickcart.controller.buyer;
 
-import java.io.IOException;
+import com.srimani.quickcart.service.CartService;
+import com.srimani.quickcart.util.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -8,9 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-
-import com.srimani.quickcart.service.BuyerService;
-import com.srimani.quickcart.util.ServiceFactory;
+import java.io.IOException;
 
 /**
  * Servlet implementation class CartServlet
@@ -19,13 +18,13 @@ import com.srimani.quickcart.util.ServiceFactory;
 public class CartServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private BuyerService service;
+	private CartService service;
 
 	@Override
 	public void init() throws ServletException {
 		// TODO Auto-generated method stub
 		super.init();
-		service = ServiceFactory.getBuyerService();
+		service = ServiceFactory.getCartService();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)

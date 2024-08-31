@@ -10,19 +10,19 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import com.srimani.quickcart.entity.User;
-import com.srimani.quickcart.service.AuthService;
+import com.srimani.quickcart.service.AuthenticationService;
 import com.srimani.quickcart.util.ServiceFactory;
 
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private AuthService authService;
+	private AuthenticationService authenticationService;
 
 	@Override
 	public void init() throws ServletException {
 		// Initialize AuthService with the appropriate DAO implementation
-		authService = ServiceFactory.getAuthenticationService();
+		authenticationService = ServiceFactory.getAuthenticationService();
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class LoginServlet extends HttpServlet {
 		String password = request.getParameter("password");
 
 		// Authenticate the user
-		User user = authService.authenticate(username, password);
+		User user = authenticationService.authenticate(username, password);
 		if (user != null) {
 			// If authentication is successful, create a session and redirect to the
 			// dashboard

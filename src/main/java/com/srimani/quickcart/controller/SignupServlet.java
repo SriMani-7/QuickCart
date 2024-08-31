@@ -11,14 +11,14 @@ import javax.servlet.http.HttpServletResponse;
 import com.srimani.quickcart.entity.Buyer;
 import com.srimani.quickcart.entity.Retailer;
 import com.srimani.quickcart.entity.User;
-import com.srimani.quickcart.service.AuthService;
+import com.srimani.quickcart.service.AuthenticationService;
 import com.srimani.quickcart.util.ServiceFactory;
 
 @WebServlet("/signup")
 public class SignupServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
-	private AuthService service;
+	private AuthenticationService service;
 
 	@Override
 	public void init() throws ServletException {

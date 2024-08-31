@@ -1,17 +1,16 @@
 package com.srimani.quickcart.controller.buyer;
 
-import java.io.IOException;
-import java.util.List;
+import com.srimani.quickcart.dto.ProductReview;
+import com.srimani.quickcart.service.BuyerService;
+import com.srimani.quickcart.util.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.srimani.quickcart.dto.ProductReview;
-import com.srimani.quickcart.service.BuyerService;
-import com.srimani.quickcart.util.ServiceFactory;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet implementation class ProductInfoServlet

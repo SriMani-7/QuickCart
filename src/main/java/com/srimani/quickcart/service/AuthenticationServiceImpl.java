@@ -8,12 +8,12 @@ import com.srimani.quickcart.entity.Retailer;
 import com.srimani.quickcart.entity.User;
 import com.srimani.quickcart.util.DAOFactory;
 
-public class AuthServiceImpl implements AuthService {
+public class AuthenticationServiceImpl implements AuthenticationService {
 	private UserDAO userDAO;
 	private BuyerDAO buyerDAO;
 	private RetailerDAO retailerDAO;
 
-	public AuthServiceImpl(DAOFactory daoFactory) {
+	public AuthenticationServiceImpl(DAOFactory daoFactory) {
 		this.userDAO = daoFactory.getUserDAO();
 		this.buyerDAO = daoFactory.getBuyerDAO();
 		this.retailerDAO = daoFactory.getRetailerDAO();

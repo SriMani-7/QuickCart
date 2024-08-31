@@ -4,7 +4,7 @@ import com.srimani.quickcart.entity.Buyer;
 import com.srimani.quickcart.entity.Retailer;
 import com.srimani.quickcart.entity.User;
 
-public interface AuthService {
+public interface AuthenticationService {
 
 	boolean hasUsername(String username);
 

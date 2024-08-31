@@ -1,13 +1,6 @@
 package com.srimani.quickcart.util;
 
-import com.srimani.quickcart.service.AdminService;
-import com.srimani.quickcart.service.AdminServiceImpl;
-import com.srimani.quickcart.service.AuthService;
-import com.srimani.quickcart.service.AuthServiceImpl;
-import com.srimani.quickcart.service.BuyerService;
-import com.srimani.quickcart.service.BuyerServiceImpl;
-import com.srimani.quickcart.service.SellerService;
-import com.srimani.quickcart.service.SellerServiceImpl;
+import com.srimani.quickcart.service.*;
 
 public class ServiceFactory {
 
@@ -19,8 +12,8 @@ public class ServiceFactory {
 		return new BuyerServiceImpl(DAOFactory.getInstance());
 	}
 
-	public static AuthService getAuthenticationService() {
-		return new AuthServiceImpl(DAOFactory.getInstance());
+	public static AuthenticationService getAuthenticationService() {
+		return new AuthenticationServiceImpl(DAOFactory.getInstance());
 	}
 
 	public static SellerService getSellerService() {
@@ -31,4 +24,7 @@ public class ServiceFactory {
 		return new AdminServiceImpl(DAOFactory.getInstance());
 	}
 
+	public static CartService getCartService() {
+		return new CartServiceImpl(DAOFactory.getInstance());
+	}
 }
