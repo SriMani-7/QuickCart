@@ -8,6 +8,7 @@ import com.srimani.quickcart.dto.ProductReview;
 import com.srimani.quickcart.entity.Order;
 import com.srimani.quickcart.entity.OrderedProduct;
 import com.srimani.quickcart.entity.Product;
+import com.srimani.quickcart.entity.Retailer;
 import com.srimani.quickcart.entity.Review;
 
 public interface BuyerService {
@@ -36,5 +37,7 @@ public interface BuyerService {
 	List<OrderedProduct> getOrderedProducts(long userId, long orderId);
 
 	List<String> getProductCategories();
+
+	Retailer getRetailerInfo(long id);
 
 }

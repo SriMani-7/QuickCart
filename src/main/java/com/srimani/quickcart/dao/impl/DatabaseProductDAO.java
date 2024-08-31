@@ -13,6 +13,7 @@ import java.util.Optional;
 import com.srimani.quickcart.dao.ProductDao;
 import com.srimani.quickcart.dto.ProductManagementDTO;
 import com.srimani.quickcart.entity.Product;
+import com.srimani.quickcart.entity.Retailer;
 import com.srimani.quickcart.util.DataSource;
 
 public class DatabaseProductDAO implements ProductDao {
@@ -239,6 +240,21 @@ public class DatabaseProductDAO implements ProductDao {
 		product.setImageUrl(rs.getString(6));
 
 		return product;
+	}
+
+	@Override
+	public Retailer getRetailer(long id) {
+		var query = "select r.name, r.address from retailers r inner join products p on p.retailer_id = r.user_id where p.id = ?";
+		return source.withQuery(query, st -> {
+			st.setLong(1, id);
+			var set = st.executeQuery();
+			var r = new Retailer();
+			if (set.next()) {
+				r.setName(set.getString(1));
+				r.setAddress(set.getString(2));
+			}
+			return r;
+		});
 	}
 
 }

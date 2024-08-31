@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import com.srimani.quickcart.dto.ProductManagementDTO;
 import com.srimani.quickcart.entity.Product;
+import com.srimani.quickcart.entity.Retailer;
 
 public interface ProductDao {
 	boolean addProduct(Long id, Product product);
@@ -28,4 +29,6 @@ public interface ProductDao {
 	List<ProductManagementDTO> getAllProductsForAdmin();
 
 	List<String> getCategories();
+
+	Retailer getRetailer(long id);
 }

@@ -13,6 +13,7 @@ import com.srimani.quickcart.dto.ProductReview;
 import com.srimani.quickcart.entity.Order;
 import com.srimani.quickcart.entity.OrderedProduct;
 import com.srimani.quickcart.entity.Product;
+import com.srimani.quickcart.entity.Retailer;
 import com.srimani.quickcart.entity.Review;
 import com.srimani.quickcart.util.DAOFactory;
 
@@ -90,5 +91,10 @@ public class BuyerServiceImpl implements BuyerService {
 	@Override
 	public List<String> getProductCategories() {
 		return productDao.getCategories();
+	}
+
+	@Override
+	public Retailer getRetailerInfo(long id) {
+		return productDao.getRetailer(id);
 	}
 }

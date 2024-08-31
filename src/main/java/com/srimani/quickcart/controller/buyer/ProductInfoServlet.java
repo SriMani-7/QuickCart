@@ -36,9 +36,10 @@ public class ProductInfoServlet extends HttpServlet {
 		var id = Long.parseLong(pid);
 		var p = service.getProduct(id);
 		List<ProductReview> reviesList = service.getProductReviews(id);
-		request.setAttribute("incart", service.isProductInCart(userId, id));
+		request.setAttribute("incart", userId == null ? false : service.isProductInCart(userId, id));
 		request.setAttribute("product", p.orElseGet(() -> null));
 		request.setAttribute("reviews", reviesList);
+		request.setAttribute("retailer", service.getRetailerInfo(id));
 		request.getRequestDispatcher("/productinfo.jsp").forward(request, response);
 	}
 }
