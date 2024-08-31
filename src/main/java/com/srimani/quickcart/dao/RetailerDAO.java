@@ -6,4 +6,8 @@ public interface RetailerDAO {
 
 	void createRetailer(Retailer s);
 
+	Retailer getProfile(Long uid);
+
+	void updateProfile(Retailer retailer);
+
 }

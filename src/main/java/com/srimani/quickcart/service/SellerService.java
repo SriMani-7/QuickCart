@@ -5,6 +5,7 @@ import java.util.List;
 import com.srimani.quickcart.dto.ProductOrderDetail;
 import com.srimani.quickcart.dto.ProductReview;
 import com.srimani.quickcart.entity.Product;
+import com.srimani.quickcart.entity.Retailer;
 
 public interface SellerService {
 
@@ -23,5 +24,9 @@ public interface SellerService {
 	boolean updateOrderStatus(Long id, long orderId, long productId, String status);
 
 	List<ProductReview> getProductReviews(Long id);
+
+	Retailer getProfile(Long uid);
+
+	void updateProfile(Retailer retailer);
 
 }

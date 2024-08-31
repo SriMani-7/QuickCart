@@ -48,6 +48,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("user-id", user.getId());
 			session.setAttribute("user-role", user.getRole());
 			session.setAttribute("username", user.getUsername());
+			session.setAttribute("email", user.getEmail());
 			// Role-based redirection
 			switch (user.getRole()) {
 			case "BUYER":

@@ -35,4 +35,37 @@ public class DatabaseRetailerDAO implements RetailerDAO {
 		}
 	}
 
+	@Override
+	public Retailer getProfile(Long uid) {
+		return dataSource.withQuery("select * from retailers where user_id = ?", st -> {
+			var re = new Retailer();
+			st.setLong(1, uid);
+			var results = st.executeQuery();
+			if (results.next()) {
+				re.setUserId(results.getLong("user_id"));
+				re.setName(results.getString("name"));
+				re.setContactEMail(results.getString("contact_email"));
+				re.setAddress(results.getString("address"));
+				re.setPhoneNumber(results.getString("phone_number"));
+			}
+			return re;
+		});
+	}
+
+	@Override
+	public void updateProfile(Retailer retailer) {
+		var query = "UPDATE retailers SET name = ?, contact_email = ?, address = ?, phone_number = ? WHERE user_id = ?";
+		dataSource.withQuery(query, st -> {
+			st.setString(1, retailer.getName());
+			st.setString(2, retailer.getContactEMail());
+			st.setString(3, retailer.getAddress());
+			st.setString(4, retailer.getPhoneNumber());
+			st.setLong(5, retailer.getUserId());
+
+			st.executeUpdate(); // Execute the update query
+
+			return null;
+		});
+	}
+
 }

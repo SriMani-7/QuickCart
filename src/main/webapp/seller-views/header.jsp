@@ -32,12 +32,9 @@
 					<li class="nav-item"><a class="nav-link"
 						href="${pageContext.request.contextPath}/retailer/orders">Orders</a>
 					</li>
-					<li class="nav-item"><a class="nav-link"
-						href="${pageContext.request.contextPath}/retailer/complaints">Complaints</a>
-					</li>
 				</ul>
 				<ul class="navbar-nav ms-auto">
-					<li class="nav-item"><a class="nav-link" href="#"> <i
+					<li class="nav-item"><a class="nav-link" href="${pageContext.request.contextPath}/retailer/profile"> <i
 							class="bi bi-person-circle"></i> Hi, ${sessionScope.username}
 					</a></li>
 					<li class="nav-item"><a class="btn btn-outline-danger ms-3"
