@@ -44,13 +44,21 @@ public class CartServlet extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		var id = request.getParameter("product-id");
+		var id = request.getParameter("productId");
+		var action = request.getParameter("action");
 		var uid = (Long) request.getSession().getAttribute("user-id");
 		var pid = Long.parseLong(id);
-		if (service.addToCart(uid, pid)) {
+
+		if (action.equals("add") && service.addToCart(uid, pid)) {
 			response.sendRedirect(request.getContextPath() + "/products/info?id=" + pid);
-		} else
-			doGet(request, response);
+			return;
+		} else if (action.equals("delete")) {
+			service.deleteCart(uid, pid);
+		} else if (action.equals("update")) {
+			var quantity = Integer.parseInt(request.getParameter("quantity"));
+			service.updateCartProductQuantity(uid, pid, quantity);
+		}
+		response.sendRedirect(request.getContextPath() + "/cart");
 	}
 
 }

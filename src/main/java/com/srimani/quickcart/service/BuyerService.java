@@ -40,4 +40,8 @@ public interface BuyerService {
 
 	Retailer getRetailerInfo(long id);
 
+	boolean deleteCart(Long uid, long pid);
+
+	void updateCartProductQuantity(Long uid, long pid, int quantity);
+
 }

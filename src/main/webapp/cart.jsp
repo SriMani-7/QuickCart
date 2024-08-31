@@ -28,17 +28,19 @@
                             <td>${item.productName}</td>
                             <td>${item.description}</td>
                             <td>
-                                <form action="${pageContext.request.contextPath}/update-cart" method="post" class="d-flex">
+                                <form action="${pageContext.request.contextPath}/cart" method="post" class="d-flex">
                                     <input type="hidden" name="productId" value="${item.productId}">
+                                    <input type="hidden" name="action" value="update">
                                     <input type="number" name="quantity" class="form-control me-2" value="${item.quantity}" min="1">
                                     <button type="submit" class="btn btn-primary">Update</button>
                                 </form>
                             </td>
-                            <td>$${item.price}</td>
-                            <td>$${item.price * item.quantity}</td>
+                            <td>&#8377; ${item.price}</td>
+                            <td>&#8377; ${item.price * item.quantity}</td>
                             <td>
-                                <form action="${pageContext.request.contextPath}/remove-cart-item" method="post">
+                                <form action="${pageContext.request.contextPath}/cart" method="post">
                                     <input type="hidden" name="productId" value="${item.productId}">
+                                    <input type="hidden" name="action" value="delete">
                                     <button type="submit" class="btn btn-danger">Remove</button>
                                 </form>
                             </td>
@@ -49,7 +51,7 @@
 
             <!-- Total Price -->
             <div class="text-end">
-                <h4>Total Price: $${totalPrice}</h4>
+                <h4>Total Price: &#8377; ${totalPrice}</h4>
                 <a href="${pageContext.request.contextPath}/checkout" class="btn btn-success mt-3">Proceed to Checkout</a>
             </div>
         </c:when>

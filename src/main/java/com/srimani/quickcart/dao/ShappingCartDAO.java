@@ -15,4 +15,8 @@ public interface ShappingCartDAO {
 	boolean checkoutCart(Long userId, String city, String address, String pincode, String phoneNumber,
 			String paymentMethod);
 
+	boolean deleteCart(Long uid, long pid);
+
+	void updateProductQuantity(Long uid, long pid, int quantity);
+
 }

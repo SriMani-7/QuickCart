@@ -97,4 +97,14 @@ public class BuyerServiceImpl implements BuyerService {
 	public Retailer getRetailerInfo(long id) {
 		return productDao.getRetailer(id);
 	}
+
+	@Override
+	public boolean deleteCart(Long uid, long pid) {
+		return shappingCartDAO.deleteCart(uid, pid);
+	}
+
+	@Override
+	public void updateCartProductQuantity(Long uid, long pid, int quantity) {
+		shappingCartDAO.updateProductQuantity(uid, pid, quantity);
+	}
 }

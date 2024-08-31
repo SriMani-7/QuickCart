@@ -90,3 +90,4 @@ out/
 *.rar
 
 # End of https://www.toptal.com/developers/gitignore/api/java,eclipse,intellij
+/build/

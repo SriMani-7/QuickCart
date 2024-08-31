@@ -1,5 +1,6 @@
 package com.srimani.quickcart.dao.impl;
 
+import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -137,6 +138,32 @@ public class DatabaseCartDAO implements ShappingCartDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return false;
+		}
+	}
+
+	@Override
+	public boolean deleteCart(Long uid, long pid) {
+		var query = "delete from cart_items where buyer_id = ? and product_id = ?";
+		try (Connection connection = dataSource.getConnection(); var st = connection.prepareStatement(query)) {
+			st.setLong(1, uid);
+			st.setLong(2, pid);
+			return st.executeUpdate() > 0;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public void updateProductQuantity(Long uid, long pid, int quantity) {
+		var query = "update cart_items set quantity = ? where buyer_id = ? and product_id = ?";
+		try (Connection connection = dataSource.getConnection(); var st = connection.prepareStatement(query)) {
+			st.setInt(1, quantity);
+			st.setLong(2, uid);
+			st.setLong(3, pid);
+			st.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

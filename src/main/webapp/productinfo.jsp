@@ -48,7 +48,8 @@
 									<!-- Add to Cart Button -->
 									<form method="post"
 										action="${pageContext.request.contextPath}/cart">
-										<input type="hidden" name="product-id" value="${product.id}">
+										<input type="hidden" name="productId" value="${product.id}">
+										<input type="hidden"name="action" value="add">
 										<button type="submit" class="btn btn-success mt-3">Add
 											to Cart</button>
 									</form>
