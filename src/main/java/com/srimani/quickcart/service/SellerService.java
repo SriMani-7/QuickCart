@@ -3,6 +3,7 @@ package com.srimani.quickcart.service;
 import java.util.List;
 
 import com.srimani.quickcart.dto.ProductOrderDetail;
+import com.srimani.quickcart.dto.ProductReview;
 import com.srimani.quickcart.entity.Product;
 
 public interface SellerService {
@@ -20,5 +21,7 @@ public interface SellerService {
 	List<ProductOrderDetail> getOrders(Long id);
 
 	boolean updateOrderStatus(Long id, long orderId, long productId, String status);
+
+	List<ProductReview> getProductReviews(Long id);
 
 }

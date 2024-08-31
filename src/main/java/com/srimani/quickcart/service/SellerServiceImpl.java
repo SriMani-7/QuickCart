@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.srimani.quickcart.dao.OrderDAO;
 import com.srimani.quickcart.dao.ProductDao;
+import com.srimani.quickcart.dao.ReviewDAO;
 import com.srimani.quickcart.dto.ProductOrderDetail;
+import com.srimani.quickcart.dto.ProductReview;
 import com.srimani.quickcart.entity.Product;
 import com.srimani.quickcart.util.DAOFactory;
 
@@ -12,10 +14,12 @@ public class SellerServiceImpl implements SellerService {
 
 	private ProductDao productDao;
 	private OrderDAO orderDAO;
+	private ReviewDAO reviewDAO;
 
 	public SellerServiceImpl(DAOFactory factory) {
 		productDao = factory.getProductDAO();
 		orderDAO = factory.getOrderDAO();
+		reviewDAO = factory.getReviewDAO();
 	}
 
 	@Override
@@ -51,6 +55,11 @@ public class SellerServiceImpl implements SellerService {
 	@Override
 	public boolean updateOrderStatus(Long sellerId, long orderId, long productId, String status) {
 		return orderDAO.updateProductOrderStatus(sellerId, orderId, productId, status);
+	}
+
+	@Override
+	public List<ProductReview> getProductReviews(Long id) {
+		return reviewDAO.getProductReviews(id);
 	}
 
 }

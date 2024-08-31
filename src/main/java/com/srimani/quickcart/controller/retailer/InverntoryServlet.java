@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.srimani.quickcart.dto.ProductReview;
 import com.srimani.quickcart.entity.Product;
 import com.srimani.quickcart.service.SellerService;
 import com.srimani.quickcart.util.ServiceFactory;
@@ -16,7 +17,7 @@ import com.srimani.quickcart.util.ServiceFactory;
 /**
  * Servlet implementation class InverntoryServlet
  */
-@WebServlet("/seller/inventory")
+@WebServlet("/retailer/inventory")
 public class InverntoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private SellerService sellerService;
@@ -32,6 +33,16 @@ public class InverntoryServlet extends HttpServlet {
 			throws ServletException, IOException {
 		var session = request.getSession();
 		var id = (Long) session.getAttribute("user-id");
+		var pid = request.getParameter("productId");
+		if (pid != null) {
+			var ppid = Long.parseLong(pid);
+			var p = sellerService.getProduct(id, ppid);
+			List<ProductReview> reviesList = sellerService.getProductReviews(id);
+			request.setAttribute("product", p);
+			request.setAttribute("reviews", reviesList);
+			request.getRequestDispatcher("/seller-views/productinfo.jsp").forward(request, response);
+			return;
+		}
 		List<Product> products = sellerService.getProducts(id);
 		request.setAttribute("inventory", products);
 		request.getRequestDispatcher("/seller-views/inventory.jsp").forward(request, response);

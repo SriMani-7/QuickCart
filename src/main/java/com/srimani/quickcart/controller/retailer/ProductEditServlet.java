@@ -15,7 +15,7 @@ import com.srimani.quickcart.util.ServiceFactory;
 /**
  * Servlet implementation class ProductEditServlet
  */
-@WebServlet("/seller/inventory/edit")
+@WebServlet("/retailer/inventory/edit")
 public class ProductEditServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private SellerService sellerService;

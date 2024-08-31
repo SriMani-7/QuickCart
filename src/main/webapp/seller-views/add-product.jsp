@@ -9,7 +9,7 @@
 <div class="container mt-5">
     <h1 class="mb-4">Add New Product</h1>
 
-    <form method="post" action="${pageContext.request.contextPath}/seller/inventory/add">
+    <form method="post" action="${pageContext.request.contextPath}/retailer/inventory/add">
         <div class="mb-3">
             <label for="productName" class="form-label">Product Name</label>
             <input type="text" class="form-control" id="productName" name="name" required>

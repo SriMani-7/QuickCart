@@ -11,7 +11,7 @@
 
     <!-- Add New Product Button -->
     <div class="mb-3">
-        <a href="${pageContext.request.contextPath}/seller/inventory/add" class="btn btn-success">Add New Product</a>
+        <a href="${pageContext.request.contextPath}/retailer/inventory/add" class="btn btn-success">Add New Product</a>
     </div>
 
     <!-- Inventory Table -->
@@ -36,14 +36,14 @@
                         <!-- Display Product Image -->
                         <img src="${product.imageUrl}" alt="${product.name}" class="img-fluid" style="max-width: 100px; max-height: 100px;">
                     </td>
-                    <td>${product.name}</td>
+                    <td><a href="${pageContext.request.contextPath}/retailer/inventory?productId=${product.id}">${product.name}</a></td>
                     <td>${product.description}</td>
                     <td>${product.category}</td>
-                    <td>$${product.price}</td>
+                    <td>&#8377;${product.price}</td>
                     
                     <td>
-                        <a href="${pageContext.request.contextPath}/seller/inventory/edit?id=${product.id}" class="btn btn-warning btn-sm">Edit</a>
-                        <form method="post" action="${pageContext.request.contextPath}/seller/inventory" style="display:inline;">
+                        <a href="${pageContext.request.contextPath}/retailer/inventory/edit?id=${product.id}" class="btn btn-warning btn-sm">Edit</a>
+                        <form method="post" action="${pageContext.request.contextPath}/retailer/inventory" style="display:inline;">
                             <input type="hidden" name="_method" value="DELETE">
                             <input type="hidden" name="id" value="${product.id}">
                             <button type="submit" class="btn btn-danger btn-sm">Delete</button>

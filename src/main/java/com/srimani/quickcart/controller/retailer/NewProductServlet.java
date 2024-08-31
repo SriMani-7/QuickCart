@@ -15,7 +15,7 @@ import com.srimani.quickcart.util.ServiceFactory;
 /**
  * Servlet implementation class NewProductServlet
  */
-@WebServlet("/seller/inventory/add")
+@WebServlet("/retailer/inventory/add")
 public class NewProductServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	private SellerService sellerService;
@@ -49,7 +49,7 @@ public class NewProductServlet extends HttpServlet {
 		p.setDescription(description);
 		p.setCategory(category);
 		p.setPrice(Double.parseDouble(price));
-		p.setImageUrl(request.getAttribute("imageUrl").toString());
+		p.setImageUrl(request.getParameter("imageUrl"));
 
 		if (sellerService.addProduct(id, p)) {
 			response.sendRedirect(request.getContextPath() + "/seller/inventory");

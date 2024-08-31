@@ -30,7 +30,7 @@
 					<td>${order.productId}</td>
 					<td>${order.name}</td>
 					<td>${order.quantity}</td>
-					<td>$${order.price}</td>
+					<td>&#8377;${order.price}</td>
 					<td>${order.buyerId}</td>
 					<td>${order.shippingAddress}<br> ${order.city} -
 						${order.pincode}<br> Phone: ${order.phoneNumber}
