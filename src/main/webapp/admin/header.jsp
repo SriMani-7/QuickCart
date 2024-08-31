@@ -22,13 +22,10 @@
                         <a class="nav-link" href="${pageContext.request.contextPath}/admin/users">Manage Users</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/products">Manage Products</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/products">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/orders">Manage Orders</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/reviews">Manage Reviews</a>
+                        <a class="nav-link" href="${pageContext.request.contextPath}/admin/orders">Orders</a>
                     </li>
                 </ul>
                 <ul class="navbar-nav ml-auto">

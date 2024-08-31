@@ -48,7 +48,7 @@ public class ManageUserServlet extends HttpServlet {
 			adminService.blockUser(userId);
 		} else if ("delete".equals(action)) {
 			adminService.deleteUser(userId);
-		} else if ("active".equals(action)) {
+		} else if ("activate".equals(action)) {
 			adminService.activateUser(userId);
 		}
 
