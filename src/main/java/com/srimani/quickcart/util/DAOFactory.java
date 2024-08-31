@@ -1,68 +1,25 @@
 package com.srimani.quickcart.util;
 
-import java.sql.DriverManager;
+import com.srimani.quickcart.dao.*;
 
-import com.srimani.quickcart.dao.BuyerDAO;
-import com.srimani.quickcart.dao.OrderDAO;
-import com.srimani.quickcart.dao.ProductDao;
-import com.srimani.quickcart.dao.RetailerDAO;
-import com.srimani.quickcart.dao.ReviewDAO;
-import com.srimani.quickcart.dao.ShappingCartDAO;
-import com.srimani.quickcart.dao.UserDAO;
-import com.srimani.quickcart.dao.impl.DatabaseBuyerDAO;
-import com.srimani.quickcart.dao.impl.DatabaseCartDAO;
-import com.srimani.quickcart.dao.impl.DatabaseOrderDAO;
-import com.srimani.quickcart.dao.impl.DatabaseProductDAO;
-import com.srimani.quickcart.dao.impl.DatabaseRetailerDAO;
-import com.srimani.quickcart.dao.impl.DatabaseReviewDAO;
-import com.srimani.quickcart.dao.impl.DatabaseUserDAO;
-
-public class DAOFactory {
-
-	private DataSource dataSource = () -> {
-		try {
-			Class.forName("com.mysql.cj.jdbc.Driver");
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		return DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommDb", "root", "Mani88");
-	};
-
-	private DAOFactory() {
-	}
+public abstract class DAOFactory {
 
 	public static DAOFactory getInstance() {
-		return new DAOFactory();
+		return new DatabaseDAOFactory();
 	}
 
-	public ProductDao getProductDAO() {
-		return new DatabaseProductDAO(dataSource);
-	}
+	public abstract ProductDao getProductDAO();
 
-	public UserDAO getUserDAO() {
-		return new DatabaseUserDAO(dataSource);
-	}
+    public abstract UserDAO getUserDAO();
 
-	public BuyerDAO getBuyerDAO() {
-		return new DatabaseBuyerDAO(dataSource);
-	}
+    public abstract BuyerDAO getBuyerDAO();
 
-	public ReviewDAO getReviewDAO() {
-		return new DatabaseReviewDAO(dataSource);
-	}
+    public abstract ReviewDAO getReviewDAO();
 
-	public ShappingCartDAO getShappingCartDAO() {
-		return new DatabaseCartDAO(dataSource);
-	}
+    public abstract ShappingCartDAO getShappingCartDAO();
 
-	public OrderDAO getOrderDAO() {
-		// TODO Auto-generated method stub
-		return new DatabaseOrderDAO(dataSource);
-	}
+    public abstract OrderDAO getOrderDAO();
 
-	public RetailerDAO getRetailerDAO() {
-		return new DatabaseRetailerDAO(dataSource);
-	}
+    public abstract RetailerDAO getRetailerDAO();
 
 }
