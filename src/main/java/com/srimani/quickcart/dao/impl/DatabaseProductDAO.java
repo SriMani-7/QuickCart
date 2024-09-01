@@ -16,9 +16,12 @@ import com.srimani.quickcart.entity.Product;
 import com.srimani.quickcart.entity.Retailer;
 import com.srimani.quickcart.exception.ProductNotFoundException;
 import com.srimani.quickcart.util.DataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DatabaseProductDAO implements ProductDao {
 	private final DataSource source;
+	private final Logger logger = LogManager.getLogger();
 
 	public DatabaseProductDAO(DataSource source) {
 		this.source = source;
@@ -39,7 +42,7 @@ public class DatabaseProductDAO implements ProductDao {
 			return statement.executeUpdate() > 0;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}
@@ -54,7 +57,7 @@ public class DatabaseProductDAO implements ProductDao {
 				return Optional.of(fromResultSet(rs));
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return Optional.empty();
 	}
@@ -79,9 +82,10 @@ public class DatabaseProductDAO implements ProductDao {
 
 			return products;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
+		logger.debug("Returning empty products for query="+query+", cat="+category);
 		return List.of();
 	}
 
@@ -100,9 +104,10 @@ public class DatabaseProductDAO implements ProductDao {
 
 			return products;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
+		logger.debug("empty products list for the retailer: "+ id);
 		return List.of();
 	}
 
@@ -119,7 +124,7 @@ public class DatabaseProductDAO implements ProductDao {
 				return fromResultSet(rs);
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		throw new ProductNotFoundException(pId);
 	}
@@ -139,8 +144,7 @@ public class DatabaseProductDAO implements ProductDao {
 
 			return st.executeUpdate() > 0;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}
@@ -153,8 +157,7 @@ public class DatabaseProductDAO implements ProductDao {
 			st.setLong(2, retailerId);
 			st.executeUpdate();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 	}
@@ -199,7 +202,7 @@ public class DatabaseProductDAO implements ProductDao {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return products;
@@ -215,7 +218,7 @@ public class DatabaseProductDAO implements ProductDao {
 					cList.add(set.getString(1));
 				return cList;
 			} catch (SQLException e) {
-				e.printStackTrace();
+				logger.error(e.getMessage(), e);
 				return List.of();
 			}
 		});

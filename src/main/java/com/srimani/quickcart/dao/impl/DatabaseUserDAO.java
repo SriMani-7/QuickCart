@@ -13,10 +13,13 @@ import com.srimani.quickcart.dto.UserDTO;
 import com.srimani.quickcart.entity.User;
 import com.srimani.quickcart.exception.UserNotExistsException;
 import com.srimani.quickcart.util.DataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DatabaseUserDAO implements UserDAO {
 
 	private DataSource dataSource;
+	private final Logger logger = LogManager.getLogger();
 
 	public DatabaseUserDAO(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -25,15 +28,18 @@ public class DatabaseUserDAO implements UserDAO {
 	@Override
 	public boolean hasUsername(String username) {
 		try (Connection c = dataSource.getConnection()) {
+			logger.debug("executing hasUserName query");
 			String query = "SELECT COUNT(*) FROM users WHERE username = ?";
 			PreparedStatement stmt = c.prepareStatement(query);
 			stmt.setString(1, username);
 			ResultSet rs = stmt.executeQuery();
 			if (rs.next()) {
-				return rs.getInt(1) > 0;
-			}
+				var rows =  rs.getInt(1);
+				logger.debug("No of effected rows "+rows);
+				return rows > 0;
+			} else logger.debug("there is no more records in resultSet");
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return false;
 	}
@@ -41,6 +47,7 @@ public class DatabaseUserDAO implements UserDAO {
 	@Override
 	public long createUser(User user) {
 		try (var con = dataSource.getConnection()) {
+			logger.debug("creating user in a database");
 			String query = "INSERT INTO users (username, password, role, email) VALUES (?, ?, ?, ?)";
 			PreparedStatement stmt = con.prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
 			stmt.setString(1, user.getUsername());
@@ -51,10 +58,11 @@ public class DatabaseUserDAO implements UserDAO {
 
 			ResultSet rs = stmt.getGeneratedKeys();
 			if (rs.next()) {
+				logger.debug("created user id "+rs.getLong(1));
 				return rs.getLong(1); // Return the generated user ID
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return 0;
 	}
@@ -73,7 +81,7 @@ public class DatabaseUserDAO implements UserDAO {
 				return u;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		throw new UserNotExistsException(username);
 	}
@@ -99,7 +107,7 @@ public class DatabaseUserDAO implements UserDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return users;
 	}
@@ -112,7 +120,7 @@ public class DatabaseUserDAO implements UserDAO {
 			var rows = st.executeUpdate();
 			if (rows <= 0) throw new UserNotExistsException(userId);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 
@@ -125,7 +133,7 @@ public class DatabaseUserDAO implements UserDAO {
 			var rows = st.executeUpdate();
 			if (rows <= 0) throw new UserNotExistsException(userId);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 	}
 

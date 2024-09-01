@@ -24,7 +24,6 @@ public class InverntoryServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
 		super.init();
 		sellerService = ServiceFactory.getSellerService();
 	}
@@ -67,7 +66,6 @@ public class InverntoryServlet extends HttpServlet {
 
 	@Override
 	protected void doDelete(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		long productId = Long.parseLong(req.getParameter("id"));
 		var session = req.getSession();
 		var id = (Long) session.getAttribute("user-id");

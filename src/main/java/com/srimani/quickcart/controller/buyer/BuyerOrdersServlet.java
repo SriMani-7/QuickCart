@@ -23,7 +23,6 @@ public class BuyerOrdersServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
 		super.init();
 		service = ServiceFactory.getBuyerService();
 	}
@@ -53,7 +52,6 @@ public class BuyerOrdersServlet extends HttpServlet {
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
 

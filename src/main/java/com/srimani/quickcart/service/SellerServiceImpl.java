@@ -69,7 +69,6 @@ public class SellerServiceImpl implements SellerService {
 
 	@Override
 	public Retailer getProfile(Long uid) {
-		// TODO Auto-generated method stub
 		return retailerDAO.getProfile(uid);
 	}
 

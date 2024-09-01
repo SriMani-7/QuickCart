@@ -6,10 +6,13 @@ import java.sql.SQLException;
 import com.srimani.quickcart.dao.BuyerDAO;
 import com.srimani.quickcart.entity.Buyer;
 import com.srimani.quickcart.util.DataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DatabaseBuyerDAO implements BuyerDAO {
 
 	private DataSource dataSource;
+	private final Logger logger = LogManager.getLogger();
 
 	public DatabaseBuyerDAO(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -25,7 +28,7 @@ public class DatabaseBuyerDAO implements BuyerDAO {
 			stmt.setString(3, buyer.getPhoneNumber());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error("Error in creating buyer", e);
 		}
 	}
 
@@ -45,7 +48,7 @@ public class DatabaseBuyerDAO implements BuyerDAO {
 				return b;
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return null;
 	}

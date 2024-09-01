@@ -2,15 +2,18 @@ package com.srimani.quickcart.util;
 
 import com.srimani.quickcart.dao.*;
 import com.srimani.quickcart.dao.impl.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.DriverManager;
 
 public class DatabaseDAOFactory extends DAOFactory {
-    private DataSource dataSource = () -> {
+    private final DataSource dataSource = () -> {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Logger logger = LogManager.getLogger();
+            logger.error(e.getMessage(), e);
         }
         return DriverManager.getConnection("jdbc:mysql://localhost:3306/ecommDb", "root", "Mani88");
     };

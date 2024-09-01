@@ -15,7 +15,6 @@ public class AdminServiceImpl implements AdminService {
 	private ProductDao productDao;
 
 	public AdminServiceImpl(DAOFactory instance) {
-		// TODO Auto-generated constructor stub
 		userDao = instance.getUserDAO();
 		productDao = instance.getProductDAO();
 	}

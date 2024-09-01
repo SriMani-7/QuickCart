@@ -22,14 +22,12 @@ public class ProductEditServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
 		super.init();
 		sellerService = ServiceFactory.getSellerService();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		var session = request.getSession();
 		var id = (Long) session.getAttribute("user-id");
 		var pid = request.getParameter("id");

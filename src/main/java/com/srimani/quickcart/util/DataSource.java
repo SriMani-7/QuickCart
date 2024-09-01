@@ -1,5 +1,8 @@
 package com.srimani.quickcart.util;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
@@ -12,12 +15,13 @@ public interface DataSource {
 		try (var con = getConnection(); var st = con.prepareStatement(query)) {
 			return statementFunction.exec(st);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			var logger = LogManager.getLogger();
+			logger.error(e.getMessage(), e);
 			return null;
 		}
 	}
 
-	public interface StatementFunction<R> {
+	interface StatementFunction<R> {
 		R exec(PreparedStatement statement) throws SQLException;
 	}
 }

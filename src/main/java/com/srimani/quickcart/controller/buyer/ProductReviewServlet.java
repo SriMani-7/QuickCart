@@ -24,14 +24,12 @@ public class ProductReviewServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
 		super.init();
 		service = ServiceFactory.getBuyerService();
 	}
 
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		var uid = (Long) req.getSession().getAttribute("user-id");
 		var reviews = service.getBuyerProductReviews(uid);
 		req.setAttribute("userReviews", reviews);
@@ -68,7 +66,6 @@ public class ProductReviewServlet extends HttpServlet {
 
 	@Override
 	protected void doDelete(HttpServletRequest request, HttpServletResponse resp) throws ServletException, IOException {
-		// TODO Auto-generated method stub
 		long rId = Long.parseLong(request.getParameter("productId"));
 		var uid = (Long) request.getSession().getAttribute("user-id");
 		service.deleteReview(rId, uid);

@@ -8,10 +8,13 @@ import com.srimani.quickcart.dao.ReviewDAO;
 import com.srimani.quickcart.dto.ProductReview;
 import com.srimani.quickcart.entity.Review;
 import com.srimani.quickcart.util.DataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DatabaseReviewDAO implements ReviewDAO {
 
 	private final DataSource source;
+	private Logger logger = LogManager.getLogger();
 
 	public DatabaseReviewDAO(DataSource source) {
 		super();
@@ -30,7 +33,7 @@ public class DatabaseReviewDAO implements ReviewDAO {
 
 			return stm.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 		return 0;
 	}
@@ -51,7 +54,7 @@ public class DatabaseReviewDAO implements ReviewDAO {
 			}
 			return prsList;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return List.of();

@@ -22,14 +22,12 @@ public class NewProductServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
 		super.init();
 		sellerService = ServiceFactory.getSellerService();
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
 
 		request.getRequestDispatcher("/seller-views/add-product.jsp").forward(request, response);
 	}

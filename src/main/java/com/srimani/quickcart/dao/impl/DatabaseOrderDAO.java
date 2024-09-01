@@ -12,10 +12,13 @@ import com.srimani.quickcart.dto.ProductOrderDetail;
 import com.srimani.quickcart.entity.Order;
 import com.srimani.quickcart.entity.OrderedProduct;
 import com.srimani.quickcart.util.DataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DatabaseOrderDAO implements OrderDAO {
 
 	private DataSource dataSource;
+	private final Logger logger = LogManager.getLogger();
 
 	public DatabaseOrderDAO(DataSource dataSource) {
 		this.dataSource = dataSource;
@@ -49,7 +52,7 @@ public class DatabaseOrderDAO implements OrderDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return orders;
@@ -83,7 +86,7 @@ public class DatabaseOrderDAO implements OrderDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return order;
@@ -119,7 +122,7 @@ public class DatabaseOrderDAO implements OrderDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			logger.error(e.getMessage(), e);
 		}
 
 		return orderedProducts;
@@ -171,8 +174,7 @@ public class DatabaseOrderDAO implements OrderDAO {
 				}
 			}
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// Handle exception (log it, rethrow it, or return a specific value)
+			logger.error(e.getMessage(), e);
 		}
 
 		return orderDetails;
@@ -204,8 +206,7 @@ public class DatabaseOrderDAO implements OrderDAO {
 			return rowsAffected > 0;
 
 		} catch (SQLException e) {
-			e.printStackTrace();
-			// Handle exception (log it, rethrow it, or return a specific value)
+			logger.error(e.getMessage(), e);
 			return false;
 		}
 	}

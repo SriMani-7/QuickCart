@@ -7,12 +7,14 @@ import java.sql.SQLException;
 import com.srimani.quickcart.dao.RetailerDAO;
 import com.srimani.quickcart.entity.Retailer;
 import com.srimani.quickcart.util.DataSource;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class DatabaseRetailerDAO implements RetailerDAO {
 	private DataSource dataSource;
+	private final Logger logger = LogManager.getLogger();
 
 	public DatabaseRetailerDAO(DataSource dataSource) {
-		// TODO Auto-generated constructor stub
 		this.dataSource = dataSource;
 	}
 
@@ -31,7 +33,7 @@ public class DatabaseRetailerDAO implements RetailerDAO {
 			pstmt.executeUpdate();
 
 		} catch (SQLException e) {
-			e.printStackTrace(); // You may want to handle this more gracefully
+			logger.error(e.getMessage(), e);
 		}
 	}
 

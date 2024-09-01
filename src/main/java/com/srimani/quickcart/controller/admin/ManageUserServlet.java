@@ -23,7 +23,6 @@ public class ManageUserServlet extends HttpServlet {
 
 	@Override
 	public void init() throws ServletException {
-		// TODO Auto-generated method stub
 		super.init();
 		adminService = ServiceFactory.getAdminService();
 	}
