@@ -1,17 +1,17 @@
 package com.srimani.quickcart.controller.admin;
 
-import java.io.IOException;
-import java.util.List;
+import com.srimani.quickcart.dto.UserDTO;
+import com.srimani.quickcart.exception.UserNotExistsException;
+import com.srimani.quickcart.service.AdminService;
+import com.srimani.quickcart.util.ServiceFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.srimani.quickcart.dto.UserDTO;
-import com.srimani.quickcart.service.AdminService;
-import com.srimani.quickcart.util.ServiceFactory;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Servlet implementation class ManageUserServlet
@@ -44,12 +44,16 @@ public class ManageUserServlet extends HttpServlet {
 		String action = request.getParameter("action");
 		long userId = Long.parseLong(request.getParameter("userId"));
 
-		if ("block".equals(action)) {
-			adminService.blockUser(userId);
-		} else if ("delete".equals(action)) {
-			adminService.deleteUser(userId);
-		} else if ("activate".equals(action)) {
-			adminService.activateUser(userId);
+		try {
+			if ("block".equals(action)) {
+				adminService.blockUser(userId);
+			} else if ("delete".equals(action)) {
+				adminService.deleteUser(userId);
+			} else if ("activate".equals(action)) {
+				adminService.activateUser(userId);
+			}
+		} catch (UserNotExistsException e) {
+			e.printStackTrace();
 		}
 
 		response.sendRedirect(request.getContextPath() + "/admin/users");

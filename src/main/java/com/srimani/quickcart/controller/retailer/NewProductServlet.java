@@ -52,7 +52,7 @@ public class NewProductServlet extends HttpServlet {
 		p.setImageUrl(request.getParameter("imageUrl"));
 
 		if (sellerService.addProduct(id, p)) {
-			response.sendRedirect(request.getContextPath() + "/seller/inventory");
+			response.sendRedirect(request.getContextPath() + "/retailer/inventory");
 		} else {
 			request.setAttribute("error", "Something went wrong");
 			doGet(request, response);

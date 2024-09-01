@@ -6,6 +6,7 @@ import com.srimani.quickcart.dto.ProductOrderDetail;
 import com.srimani.quickcart.dto.ProductReview;
 import com.srimani.quickcart.entity.Product;
 import com.srimani.quickcart.entity.Retailer;
+import com.srimani.quickcart.exception.ProductNotFoundException;
 
 public interface SellerService {
 
@@ -13,11 +14,11 @@ public interface SellerService {
 
 	boolean addProduct(Long id, Product p);
 
-	Product getProduct(Long sellerId, long pId);
+	Product getProduct(Long sellerId, long pId) throws ProductNotFoundException;
 
 	boolean updateProduct(Long id, Product p);
 
-	void deleteProduct(Long sellerId, long productId);
+	void deleteProduct(Long sellerId, long productId) throws ProductNotFoundException;
 
 	List<ProductOrderDetail> getOrders(Long id);
 

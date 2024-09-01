@@ -9,7 +9,7 @@ CREATE TABLE `users` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`)
-}
+)
 
 CREATE TABLE `buyers` (
   `user_id` bigint NOT NULL,

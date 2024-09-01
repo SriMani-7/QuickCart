@@ -18,12 +18,11 @@ public class DatabaseBuyerDAO implements BuyerDAO {
 	@Override
 	public void createBuyer(Buyer buyer) {
 		try (var con = dataSource.getConnection()) {
-			String query = "INSERT INTO buyers (user_id, city, pincode, phone_number) VALUES (?, ?, ?, ?)";
+			String query = "INSERT INTO buyers (user_id, pincode, phone_number) VALUES ( ?, ?, ?)";
 			var stmt = con.prepareStatement(query);
 			stmt.setLong(1, buyer.getUserId());
-			stmt.setString(2, buyer.getCity());
-			stmt.setInt(3, buyer.getPincode());
-			stmt.setString(4, buyer.getPhoneNumber());
+			stmt.setInt(2, buyer.getPincode());
+			stmt.setString(3, buyer.getPhoneNumber());
 			stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -42,7 +41,6 @@ public class DatabaseBuyerDAO implements BuyerDAO {
 				b.setId(rs.getLong("id"));
 				b.setUserId(rs.getLong("user_id"));
 				b.setPincode(rs.getInt("pincode"));
-				b.setCity(rs.getString("city"));
 				b.setPhoneNumber(rs.getString("phone_number"));
 				return b;
 			}

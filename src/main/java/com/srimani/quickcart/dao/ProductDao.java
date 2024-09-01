@@ -6,29 +6,26 @@ import java.util.Optional;
 import com.srimani.quickcart.dto.ProductManagementDTO;
 import com.srimani.quickcart.entity.Product;
 import com.srimani.quickcart.entity.Retailer;
+import com.srimani.quickcart.exception.ProductNotFoundException;
 
 public interface ProductDao {
-	boolean addProduct(Long id, Product product);
+	boolean addProduct(Long retailerId, Product product);
 
 	Optional<Product> getProduct(long id);
 
 	List<Product> findProducts(String name, String category);
 
-	List<Product> findProductsByCategory(String category);
-
-	boolean deleteProduct(long id);
-
-	boolean updateProduct(Long id, Product product);
+	boolean updateProduct(Long retailerId, Product product);
 
 	List<Product> getProductsByRetailer(Long id);
 
-	Product getProduct(Long sellerId, long pId);
+	Product getProduct(Long retailerId, long pId) throws ProductNotFoundException;
 
-	void deleteProduct(Long sellerId, long productId);
+	void deleteProduct(Long retailerId, long productId) throws ProductNotFoundException;
 
 	List<ProductManagementDTO> getAllProductsForAdmin();
 
 	List<String> getCategories();
 
-	Retailer getRetailer(long id);
+	Retailer getProductRetailer(long id);
 }

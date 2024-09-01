@@ -61,7 +61,7 @@ height: 5em;
 				<div class="alert alert-warning text-center" role="alert">No
 					products found.</div>
 			</div>
-		</c:if>
+		</c:if>m
 	</div>
 </div>
 

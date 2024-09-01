@@ -10,6 +10,7 @@ import com.srimani.quickcart.dto.ProductOrderDetail;
 import com.srimani.quickcart.dto.ProductReview;
 import com.srimani.quickcart.entity.Product;
 import com.srimani.quickcart.entity.Retailer;
+import com.srimani.quickcart.exception.ProductNotFoundException;
 import com.srimani.quickcart.util.DAOFactory;
 
 public class SellerServiceImpl implements SellerService {
@@ -37,7 +38,7 @@ public class SellerServiceImpl implements SellerService {
 	}
 
 	@Override
-	public Product getProduct(Long sellerId, long pId) {
+	public Product getProduct(Long sellerId, long pId) throws ProductNotFoundException {
 		return productDao.getProduct(sellerId, pId);
 	}
 
@@ -47,7 +48,7 @@ public class SellerServiceImpl implements SellerService {
 	}
 
 	@Override
-	public void deleteProduct(Long sellerId, long productId) {
+	public void deleteProduct(Long sellerId, long productId) throws ProductNotFoundException {
 		productDao.deleteProduct(sellerId, productId);
 	}
 

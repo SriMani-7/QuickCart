@@ -3,7 +3,6 @@ package com.srimani.quickcart.entity;
 public class Buyer {
 	private long id;
 	private long userId;
-	private String city;
 	private int pincode;
 	private String phoneNumber;
 
@@ -21,14 +20,6 @@ public class Buyer {
 
 	public void setUserId(long userId) {
 		this.userId = userId;
-	}
-
-	public String getCity() {
-		return city;
-	}
-
-	public void setCity(String city) {
-		this.city = city;
 	}
 
 	public int getPincode() {

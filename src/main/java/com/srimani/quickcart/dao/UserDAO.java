@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.srimani.quickcart.dto.UserDTO;
 import com.srimani.quickcart.entity.User;
+import com.srimani.quickcart.exception.UserNotExistsException;
 
 public interface UserDAO {
 
@@ -11,12 +12,12 @@ public interface UserDAO {
 
 	long createUser(User user);
 
-	User getUserById(long id);
-
-	User getUserByUsername(String username);
+	User getUserByUsername(String username) throws UserNotExistsException;
 
 	List<UserDTO> getAllUsers();
 
-	void manageUser(long userId, String string);
+	void deleteUser(long userId) throws UserNotExistsException;
+
+	void manageUser(long userId, String status) throws UserNotExistsException;
 
 }

@@ -14,6 +14,7 @@ import com.srimani.quickcart.dao.ProductDao;
 import com.srimani.quickcart.dto.ProductManagementDTO;
 import com.srimani.quickcart.entity.Product;
 import com.srimani.quickcart.entity.Retailer;
+import com.srimani.quickcart.exception.ProductNotFoundException;
 import com.srimani.quickcart.util.DataSource;
 
 public class DatabaseProductDAO implements ProductDao {
@@ -24,7 +25,7 @@ public class DatabaseProductDAO implements ProductDao {
 	}
 
 	@Override
-	public boolean addProduct(Long sellerId, Product product) {
+	public boolean addProduct(Long retailerId, Product product) {
 		try (Connection connection = source.getConnection()) {
 			PreparedStatement statement = connection.prepareStatement(
 					"insert into products (name, description, category, price, retailer_id, image_url) values(?,?,?,?,?,?)");
@@ -32,7 +33,7 @@ public class DatabaseProductDAO implements ProductDao {
 			statement.setString(2, product.getDescription());
 			statement.setString(3, product.getCategory());
 			statement.setDouble(4, product.getPrice());
-			statement.setLong(5, sellerId);
+			statement.setLong(5, retailerId);
 			statement.setString(6, product.getImageUrl());
 
 			return statement.executeUpdate() > 0;
@@ -85,16 +86,6 @@ public class DatabaseProductDAO implements ProductDao {
 	}
 
 	@Override
-	public List<Product> findProductsByCategory(String category) {
-		return null;
-	}
-
-	@Override
-	public boolean deleteProduct(long id) {
-		return false;
-	}
-
-	@Override
 	public List<Product> getProductsByRetailer(Long id) {
 		try (Connection connection = source.getConnection()) {
 			var statement = connection.prepareStatement(
@@ -116,12 +107,12 @@ public class DatabaseProductDAO implements ProductDao {
 	}
 
 	@Override
-	public Product getProduct(Long sellerId, long pId) {
+	public Product getProduct(Long retailerId, long pId) throws ProductNotFoundException {
 		try (Connection connection = source.getConnection()) {
 			var statement = connection.prepareStatement(
 					"select id, name, description, category, price, image_url from products where id=? and retailer_id=?");
 			statement.setLong(1, pId);
-			statement.setLong(2, sellerId);
+			statement.setLong(2, retailerId);
 
 			ResultSet rs = statement.executeQuery();
 			if (rs.next()) {
@@ -130,11 +121,11 @@ public class DatabaseProductDAO implements ProductDao {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		throw new ProductNotFoundException(pId);
 	}
 
 	@Override
-	public boolean updateProduct(Long id, Product product) {
+	public boolean updateProduct(Long retailerId, Product product) {
 		try (var con = source.getConnection()) {
 			var st = con.prepareStatement(
 					"update products set name = ?, description = ?, category = ?, price = ?, image_url = ? where retailer_id = ? and id = ?");
@@ -143,7 +134,7 @@ public class DatabaseProductDAO implements ProductDao {
 			st.setString(3, product.getCategory());
 			st.setDouble(4, product.getPrice());
 			st.setString(5, product.getImageUrl());
-			st.setLong(6, id);
+			st.setLong(6, retailerId);
 			st.setLong(7, product.getId());
 
 			return st.executeUpdate() > 0;
@@ -155,11 +146,11 @@ public class DatabaseProductDAO implements ProductDao {
 	}
 
 	@Override
-	public void deleteProduct(Long sellerId, long productId) {
+	public void deleteProduct(Long retailerId, long productId) {
 		try (var con = source.getConnection()) {
 			var st = con.prepareStatement("delete from products where id = ? and retailer_id = ?");
 			st.setLong(1, productId);
-			st.setLong(2, sellerId);
+			st.setLong(2, retailerId);
 			st.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -216,7 +207,7 @@ public class DatabaseProductDAO implements ProductDao {
 
 	@Override
 	public List<String> getCategories() {
-		return source.withQuery("select category from products", st -> {
+		return source.withQuery("select distinct category from products", st -> {
 			try {
 				List<String> cList = new LinkedList<String>();
 				var set = st.executeQuery();
@@ -243,7 +234,7 @@ public class DatabaseProductDAO implements ProductDao {
 	}
 
 	@Override
-	public Retailer getRetailer(long id) {
+	public Retailer getProductRetailer(long id) {
 		var query = "select r.name, r.address from retailers r inner join products p on p.retailer_id = r.user_id where p.id = ?";
 		return source.withQuery(query, st -> {
 			st.setLong(1, id);

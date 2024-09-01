@@ -6,6 +6,7 @@ import com.srimani.quickcart.dao.UserDAO;
 import com.srimani.quickcart.entity.Buyer;
 import com.srimani.quickcart.entity.Retailer;
 import com.srimani.quickcart.entity.User;
+import com.srimani.quickcart.exception.UserNotExistsException;
 import com.srimani.quickcart.util.DAOFactory;
 
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -35,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 	}
 
 	@Override
-	public User authenticate(String username, String password) {
+	public User authenticate(String username, String password) throws UserNotExistsException {
 		var u = userDAO.getUserByUsername(username);
 		if (u.getPassword().equals(password)) {
 			return u;

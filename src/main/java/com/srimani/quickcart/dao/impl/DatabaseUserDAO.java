@@ -11,6 +11,7 @@ import java.util.List;
 import com.srimani.quickcart.dao.UserDAO;
 import com.srimani.quickcart.dto.UserDTO;
 import com.srimani.quickcart.entity.User;
+import com.srimani.quickcart.exception.UserNotExistsException;
 import com.srimani.quickcart.util.DataSource;
 
 public class DatabaseUserDAO implements UserDAO {
@@ -59,26 +60,7 @@ public class DatabaseUserDAO implements UserDAO {
 	}
 
 	@Override
-	public User getUserById(long id) {
-		try (Connection con = dataSource.getConnection()) {
-			String query = "SELECT * FROM users WHERE id = ?";
-			PreparedStatement stmt = con.prepareStatement(query);
-			stmt.setLong(1, id);
-			ResultSet rs = stmt.executeQuery();
-			if (rs.next()) {
-				User u = new User(rs.getString("username"), rs.getString("password"), rs.getString("role"),
-						rs.getString("email"));
-				u.setId(rs.getLong("id"));
-				return u;
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
-
-	@Override
-	public User getUserByUsername(String username) {
+	public User getUserByUsername(String username) throws UserNotExistsException {
 		try (Connection con = dataSource.getConnection()) {
 			String query = "SELECT * FROM users WHERE username = ?";
 			PreparedStatement stmt = con.prepareStatement(query);
@@ -93,7 +75,7 @@ public class DatabaseUserDAO implements UserDAO {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		throw new UserNotExistsException(username);
 	}
 
 	@Override
@@ -123,25 +105,28 @@ public class DatabaseUserDAO implements UserDAO {
 	}
 
 	@Override
-	public void manageUser(long userId, String string) {
-		String dsql = "DELETE FROM users WHERE id = ?";
-		var usql = "UPDATE users SET status = ? WHERE id = ?";
-
-		try (Connection con = dataSource.getConnection();) {
-			PreparedStatement ptPreparedStatement;
-			if (string.equals("DELETE")) {
-				ptPreparedStatement = con.prepareStatement(dsql);
-				ptPreparedStatement.setLong(1, userId);
-			} else {
-				ptPreparedStatement = con.prepareStatement(usql);
-				ptPreparedStatement.setString(1, string);
-				ptPreparedStatement.setLong(2, userId);
-			}
-			ptPreparedStatement.executeUpdate();
+	public void deleteUser(long userId) throws UserNotExistsException {
+		try(var con = dataSource.getConnection()) {
+			var st = con.prepareStatement("DELETE FROM users WHERE id = ?");
+			st.setLong(1, userId);
+			var rows = st.executeUpdate();
+			if (rows <= 0) throw new UserNotExistsException(userId);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
 
+	@Override
+	public void manageUser(long userId, String status) throws UserNotExistsException {
+		try(var con = dataSource.getConnection()) {
+			var st = con.prepareStatement("UPDATE users SET status = ? WHERE id = ?");
+			st.setString(1, status);
+			st.setLong(2, userId);
+			var rows = st.executeUpdate();
+			if (rows <= 0) throw new UserNotExistsException(userId);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

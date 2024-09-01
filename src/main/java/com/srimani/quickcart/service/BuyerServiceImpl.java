@@ -72,7 +72,7 @@ public class BuyerServiceImpl implements BuyerService {
 
 	@Override
 	public Retailer getRetailerInfo(long id) {
-		return productDao.getRetailer(id);
+		return productDao.getProductRetailer(id);
 	}
 
 	@Override

@@ -6,6 +6,7 @@ import com.srimani.quickcart.dao.ProductDao;
 import com.srimani.quickcart.dao.UserDAO;
 import com.srimani.quickcart.dto.ProductManagementDTO;
 import com.srimani.quickcart.dto.UserDTO;
+import com.srimani.quickcart.exception.UserNotExistsException;
 import com.srimani.quickcart.util.DAOFactory;
 
 public class AdminServiceImpl implements AdminService {
@@ -25,17 +26,17 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public void blockUser(long userId) {
+	public void blockUser(long userId) throws UserNotExistsException {
 		userDao.manageUser(userId, "BLOCK");
 	}
 
 	@Override
-	public void deleteUser(long userId) {
-		userDao.manageUser(userId, "DELETE");
+	public void deleteUser(long userId) throws UserNotExistsException {
+		userDao.deleteUser(userId);
 	}
 
 	@Override
-	public void activateUser(long userId) {
+	public void activateUser(long userId) throws UserNotExistsException {
 		userDao.manageUser(userId, "ACTIVE");
 
 	}
