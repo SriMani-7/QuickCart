@@ -1,85 +1,104 @@
-CREATE TABLE users (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL,
-    role VARCHAR(8) NOT NULL,
-);
+CREATE TABLE `users` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `username` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `role` varchar(8) NOT NULL,
+  `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` varchar(255) NOT NULL DEFAULT 'ALLOWED',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `username` (`username`),
+  UNIQUE KEY `email` (`email`)
+}
 
-CREATE TABLE buyers (
-    user_id BIGINT PRIMARY KEY,
-    city VARCHAR(100) NOT NULL,
-    pincode VARCHAR(6) NOT NULL,
-    phone_number VARCHAR(10) NOT NULL UNIQUE,
-    CONSTRAINT fk_buyer_user FOREIGN KEY (user_id) REFERENCES users(id)
-);
+CREATE TABLE `buyers` (
+  `user_id` bigint NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `pincode` varchar(6) NOT NULL,
+  `phone_number` varchar(10) NOT NULL,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `phone_number` (`phone_number`),
+  CONSTRAINT `fk_buyer_user` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
 
-CREATE TABLE retailers (
-    user_id BIGINT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    contact_email VARCHAR(255) UNIQUE,
-    phone_number VARCHAR(20),
-    address TEXT,
-    CONSTRAINT fk_user FOREIGN KEY (user_id) REFERENCES users(id)
-);
+CREATE TABLE `retailers` (
+  `user_id` bigint NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `contact_email` varchar(255) DEFAULT NULL,
+  `phone_number` varchar(20) DEFAULT NULL,
+  `address` text,
+  PRIMARY KEY (`user_id`),
+  UNIQUE KEY `user_id` (`user_id`),
+  UNIQUE KEY `contact_email` (`contact_email`),
+  CONSTRAINT `fk_user_id` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
 
-CREATE TABLE products (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) NOT NULL,
-    description TEXT,
-    category VARCHAR(255),
-    price DECIMAL(10, 2),
-    retailer_id BIGINT,
-    CONSTRAINT fk_retailer FOREIGN KEY (retailer_id) REFERENCES retailers(user_id)
-);
+CREATE TABLE `products` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `description` text,
+  `category` varchar(255) DEFAULT NULL,
+  `price` decimal(10,2) DEFAULT NULL,
+  `retailer_id` bigint DEFAULT NULL,
+  `image_url` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_retailer` (`retailer_id`),
+  CONSTRAINT `fk_retailer` FOREIGN KEY (`retailer_id`) REFERENCES `retailers` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
 
-CREATE TABLE reviews (
-    product_id BIGINT NOT NULL,
-    user_id BIGINT NOT NULL,
-    message TEXT,
-    rating DOUBLE NOT NULL,
-    CONSTRAINT fk_review_user FOREIGN KEY (user_id) REFERENCES users(id),
-    CONSTRAINT fk_review_product FOREIGN KEY (product_id) REFERENCES products(id),
-    CONSTRAINT pk_review PRIMARY KEY (product_id, user_id)
-);
+CREATE TABLE `reviews` (
+  `product_id` bigint NOT NULL,
+  `user_id` bigint NOT NULL,
+  `message` text,
+  `rating` double NOT NULL,
+  PRIMARY KEY (`product_id`,`user_id`),
+  KEY `fk_review_user_idx` (`user_id`),
+  CONSTRAINT `fk_review_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
+  CONSTRAINT `fk_review_user` FOREIGN KEY (`user_id`) REFERENCES `buyers` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
 
-CREATE TABLE cart_items (
-    id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    buyer_id BIGINT NOT NULL,
-    product_id BIGINT NOT NULL,
-    quantity INT NOT NULL,
-    FOREIGN KEY (buyer_id) REFERENCES buyers(user_id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
-);
+CREATE TABLE `cart_items` (
+  `id` bigint NOT NULL AUTO_INCREMENT,
+  `buyer_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL,
+  `quantity` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_cart_item_buyer` (`buyer_id`),
+  KEY `fk_cart_item_product` (`product_id`),
+  CONSTRAINT `fk_cart_item_buyer` FOREIGN KEY (`buyer_id`) REFERENCES `buyers` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `fk_cart_item_product` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
 
-CREATE TABLE orders (
-    order_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    user_id BIGINT NOT NULL,
-    total_price DECIMAL(10, 2) NOT NULL,
-    order_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    payment_method VARCHAR(50) NOT NULL,
-    shipping_address VARCHAR(255) NOT NULL,
-    city VARCHAR(100) NOT NULL,
-    pincode INT NOT NULL,
-    phone_number VARCHAR(15) NOT NULL,
-    status VARCHAR(20) DEFAULT 'Pending' NOT NULL,
-    FOREIGN KEY (user_id) REFERENCES users(id)
-);
-
-
-CREATE TABLE order_items (
-    order_item_id BIGINT AUTO_INCREMENT PRIMARY KEY,
-    order_id BIGINT NOT NULL,
-    product_id BIGINT NOT NULL,
-    quantity INT NOT NULL,
-    price DECIMAL(10, 2) NOT NULL,
-    status VARCHAR(20) DEFAULT 'Pending' NOT NULL,
-    FOREIGN KEY (order_id) REFERENCES orders(order_id),
-    FOREIGN KEY (product_id) REFERENCES products(id)
-);
+CREATE TABLE `orders` (
+  `order_id` bigint NOT NULL AUTO_INCREMENT,
+  `user_id` bigint NOT NULL,
+  `total_price` decimal(10,2) NOT NULL,
+  `order_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `payment_method` varchar(50) NOT NULL,
+  `shipping_address` varchar(255) NOT NULL,
+  `city` varchar(100) NOT NULL,
+  `pincode` int NOT NULL,
+  `phone_number` varchar(15) NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'Pending',
+  PRIMARY KEY (`order_id`),
+  KEY `orders_ibfk_1_idx` (`user_id`),
+  CONSTRAINT `orders_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `buyers` (`user_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 
 
-
+CREATE TABLE `order_items` (
+  `order_item_id` bigint NOT NULL AUTO_INCREMENT,
+  `order_id` bigint NOT NULL,
+  `product_id` bigint NOT NULL,
+  `quantity` int NOT NULL,
+  `price` decimal(10,2) NOT NULL,
+  `status` varchar(20) NOT NULL DEFAULT 'Pending',
+  PRIMARY KEY (`order_item_id`),
+  KEY `order_items_ibfk_1` (`order_id`),
+  KEY `order_items_ibfk_2` (`product_id`),
+  CONSTRAINT `order_items_ibfk_1` FOREIGN KEY (`order_id`) REFERENCES `orders` (`order_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `order_items_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+)
 
 INSERT INTO users (username, email, password, role) VALUES
 ('john_doe', 'john.doe@example.com', '1234', 'SELLER'),
