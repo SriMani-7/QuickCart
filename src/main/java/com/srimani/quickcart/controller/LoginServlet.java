@@ -1,8 +1,6 @@
 package com.srimani.quickcart.controller;
 
-import com.srimani.quickcart.exception.UserNotExistsException;
-import com.srimani.quickcart.service.AuthenticationService;
-import com.srimani.quickcart.util.ServiceFactory;
+import java.io.IOException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,8 +8,24 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
+import com.srimani.quickcart.exception.UserNotExistsException;
+import com.srimani.quickcart.service.AuthenticationService;
+import com.srimani.quickcart.util.ServiceFactory;
+
+/**
+ * {@code LoginServlet} handles user authentication and login requests.
+ * <p>
+ * This servlet processes login requests from users by validating their
+ * credentials. Upon successful authentication, it establishes an HTTP session
+ * and redirects users based on their roles (e.g., buyer, seller, admin). If
+ * authentication fails, it forwards the request back to the login page with an
+ * error message.
+ * </p>
+ * 
+ * @see AuthenticationService
+ * @see UserNotExistsException
+ */
 @WebServlet("/login")
 public class LoginServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -38,8 +52,8 @@ public class LoginServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 
-        try {
-            var user = authenticationService.authenticate(username, password);
+		try {
+			var user = authenticationService.authenticate(username, password);
 			HttpSession session = request.getSession();
 			session.setAttribute("user-id", user.getId());
 			session.setAttribute("user-role", user.getRole());
@@ -47,25 +61,25 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("email", user.getEmail());
 			// Role-based redirection
 			switch (user.getRole()) {
-				case "BUYER":
-					response.sendRedirect(request.getContextPath() + "/products");
-					break;
-				case "SELLER":
-					response.sendRedirect(request.getContextPath() + "/retailer/inventory");
-					break;
-				case "ADMIN":
-					response.sendRedirect(request.getContextPath() + "/admin/users");
-					break;
-				default:
-					// Handle any unknown roles (optional)
-					response.sendRedirect(request.getContextPath() + "/");
-					break;
+			case "BUYER":
+				response.sendRedirect(request.getContextPath() + "/products");
+				break;
+			case "SELLER":
+				response.sendRedirect(request.getContextPath() + "/retailer/inventory");
+				break;
+			case "ADMIN":
+				response.sendRedirect(request.getContextPath() + "/admin/users");
+				break;
+			default:
+				// Handle any unknown roles (optional)
+				response.sendRedirect(request.getContextPath() + "/");
+				break;
 			}
-        } catch (UserNotExistsException e) {
-            e.printStackTrace();
+		} catch (UserNotExistsException e) {
+			e.printStackTrace();
 			request.setAttribute("errorMessage", "Invalid username or password.");
 			request.getRequestDispatcher("/login.jsp").forward(request, response);
-        }
+		}
 	}
 
 }

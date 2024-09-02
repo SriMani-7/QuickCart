@@ -47,7 +47,7 @@ height: 5em;
 						<h5 class="card-title">${product.name}</h5>
 						<p class="card-text   text-truncate">${product.description}</p>
 						<p class="card-text">
-							<strong>Price:</strong> $${product.price}
+							<strong>Price:</strong> &#8377;${product.price}
 						</p>
 						<a
 							href="${pageContext.request.contextPath}/products/info?id=${product.id}"
@@ -61,7 +61,7 @@ height: 5em;
 				<div class="alert alert-warning text-center" role="alert">No
 					products found.</div>
 			</div>
-		</c:if>m
+		</c:if>
 	</div>
 </div>
 

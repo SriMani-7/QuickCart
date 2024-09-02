@@ -39,7 +39,7 @@ public class ProductReviewServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		var action = request.getParameter("action");
-		if (action.equals("delete")) {
+		if (action != null && action.equals("delete")) {
 			doDelete(request, response);
 			return;
 		}

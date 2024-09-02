@@ -10,7 +10,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 /**
- * Servlet implementation class LogoutServlet
+ * {@code LogoutServlet} handles user logout requests.
+ * <p>
+ * This servlet is responsible for invalidating the user's HTTP session,
+ * effectively logging the user out of the application. After invalidating the
+ * session, it redirects the user to the home page ("/").
+ * </p>
+ * 
+ * @see HttpServlet
  */
 @WebServlet("/logout")
 public class LogoutServlet extends HttpServlet {

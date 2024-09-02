@@ -15,7 +15,16 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Servlet Filter implementation class LoggingFilter
+ * {@code LoggingFilter} is a servlet filter that logs HTTP requests.
+ * <p>
+ * This filter logs the HTTP method and request URI of each incoming request. It
+ * is useful for monitoring and debugging purposes as it provides insight into
+ * the requests being processed by the web application.
+ * </p>
+ * <p>
+ * The filter is applied to all URL patterns ("/") as specified in the
+ * {@code urlPatterns} attribute.
+ * </p>
  */
 @WebFilter(filterName = "LoggingFilter", urlPatterns = { "/*" })
 public class LoggingFilter extends HttpFilter implements Filter {
