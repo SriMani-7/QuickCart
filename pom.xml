@@ -11,7 +11,14 @@
 		user-friendly, and versatile e-commerce application like Amazon for both
 		buyers and sellers. The core functionalities for buyers include browsing
 		products, adding products to cart, checkout, and payment processing.
-		Sellers can add products, manage inventory, and fulfill orders. The core technologies are Jakarta EE, JDBC, HTML5 and CSS3</description>
+		Sellers can add products, manage inventory, and fulfill orders. The core
+		technologies are Jakarta EE, JDBC, HTML5 and CSS3</description>
+
+	<properties>
+      <siteMainDirectory>${user.home}</siteMainDirectory>
+      <scmPubCheckoutDirectory>\${siteMainDirectory}/quickcart-site-content-scm</scmPubCheckoutDirectory>
+    </properties>
+
 	<build>
 		<plugins>
 			<plugin>
@@ -28,6 +35,16 @@
 			<plugin>
 				<artifactId>maven-site-plugin</artifactId>
 				<version>3.20.0</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-scm-publish-plugin</artifactId>
+				<version>3.3.0</version>
+				<configuration>
+					<checkoutDirectory>${scmPubCheckoutDirectory}</checkoutDirectory>
+        			<tryUpdate>true</tryUpdate>
+					<scmBranch>gh-pages</scmBranch>
+				</configuration>
 			</plugin>
 		</plugins>
 	</build>
@@ -85,4 +102,10 @@
 			</plugin>
 		</plugins>
 	</reporting>
+	<distributionManagement>
+    	<site>
+      		<id>github</id>
+      		<url>scm:git:https://github.com/SriMani-7/QuickCart.git</url>
+    	</site>
+  </distributionManagement>
 </project>
