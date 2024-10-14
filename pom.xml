@@ -7,18 +7,27 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>war</packaging>
 	<name>QuickCart</name>
+	<description>This project aims to develop a secure,
+		user-friendly, and versatile e-commerce application like Amazon for both
+		buyers and sellers. The core functionalities for buyers include browsing
+		products, adding products to cart, checkout, and payment processing.
+		Sellers can add products, manage inventory, and fulfill orders. The core technologies are Jakarta EE, JDBC, HTML5 and CSS3</description>
 	<build>
 		<plugins>
 			<plugin>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<version>3.8.1</version>
 				<configuration>
-					<release>22</release>
+					<release>17</release>
 				</configuration>
 			</plugin>
 			<plugin>
 				<artifactId>maven-war-plugin</artifactId>
 				<version>3.2.3</version>
+			</plugin>
+			<plugin>
+				<artifactId>maven-site-plugin</artifactId>
+				<version>3.20.0</version>
 			</plugin>
 		</plugins>
 	</build>
@@ -35,7 +44,8 @@
 			<artifactId>jakarta.servlet.jsp.jstl</artifactId>
 			<version>1.2.6</version>
 		</dependency>
-		<!-- https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-web -->
+		<!--
+		https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-web -->
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-web</artifactId>
@@ -52,4 +62,27 @@
 			<version>5.13.0</version>
 		</dependency>
 	</dependencies>
+
+	<reporting>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-project-info-reports-plugin</artifactId>
+				<version>3.7.0</version>
+				<reportSets>
+					<reportSet>
+						<reports>
+							<report>index</report>
+							<report>summary</report>
+							<report>dependencies</report>
+							<report>dependency-convergence</report>
+							<report>dependency-management</report>
+							<report>plugin-management</report>
+							<report>plugins</report>
+						</reports>
+					</reportSet>
+				</reportSets>
+			</plugin>
+		</plugins>
+	</reporting>
 </project>
