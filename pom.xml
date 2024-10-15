@@ -15,9 +15,10 @@
 		technologies are Jakarta EE, JDBC, HTML5 and CSS3</description>
 
 	<properties>
-      <siteMainDirectory>${user.home}</siteMainDirectory>
-      <scmPubCheckoutDirectory>\${siteMainDirectory}/quickcart-site-content-scm</scmPubCheckoutDirectory>
-    </properties>
+		<siteMainDirectory>${user.home}</siteMainDirectory>
+		<scmPubCheckoutDirectory>
+			\${siteMainDirectory}/quickcart-site-content-scm</scmPubCheckoutDirectory>
+	</properties>
 
 	<build>
 		<plugins>
@@ -42,7 +43,7 @@
 				<version>3.3.0</version>
 				<configuration>
 					<checkoutDirectory>${scmPubCheckoutDirectory}</checkoutDirectory>
-        			<tryUpdate>true</tryUpdate>
+					<tryUpdate>true</tryUpdate>
 					<scmBranch>gh-pages</scmBranch>
 				</configuration>
 			</plugin>
@@ -100,12 +101,17 @@
 					</reportSet>
 				</reportSets>
 			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<version>3.10.1</version>
+			</plugin>
 		</plugins>
 	</reporting>
 	<distributionManagement>
-    	<site>
-      		<id>github</id>
-      		<url>scm:git:https://github.com/SriMani-7/QuickCart.git</url>
-    	</site>
-  </distributionManagement>
+		<site>
+			<id>github</id>
+			<url>scm:git:https://github.com/SriMani-7/QuickCart.git</url>
+		</site>
+	</distributionManagement>
 </project>
